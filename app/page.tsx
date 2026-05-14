@@ -85,6 +85,8 @@ const ACCENT   = '#C9A66B';
 const MUTED    = '#6C5B4E';
 const BORDER   = '#E5E1DA';
 const SURFACE  = '#F0EDEA';
+const FIELD_BG = '#E8E3DC';
+const FIELD_BD = '#D5CEC5';
 const SEL_BG   = 'rgba(201,166,107,0.08)';
 
 const FONT_H = "var(--font-newsreader), 'Newsreader', Georgia, serif";
@@ -103,7 +105,7 @@ const SECTION_LABEL: React.CSSProperties = {
   color: ACCENT,
   marginBottom: '12px',
   fontFamily: FONT_B,
-  fontWeight: 500,
+  fontWeight: 600,
 };
 
 // ─── Shared primitives ──────────────────────────────────────────────────────
@@ -129,7 +131,7 @@ function LogoMark() {
       <DotsLogo />
       <span style={{
         fontFamily: FONT_B,
-        fontWeight: 500,
+        fontWeight: 600,
         fontSize: '12.5px',
         letterSpacing: '0.4em',
         textTransform: 'uppercase' as const,
@@ -162,7 +164,7 @@ function AnimatedLogoMark() {
       <AnimatedDotsLogo />
       <span style={{
         fontFamily: FONT_B,
-        fontWeight: 500,
+        fontWeight: 600,
         fontSize: '12.5px',
         letterSpacing: '0.4em',
         textTransform: 'uppercase' as const,
@@ -323,8 +325,8 @@ function Intake({ onComplete, onBack, initialData }: { onComplete: (data: Intake
   const handleSubmit = () => { const e = validate(); if (Object.keys(e).length) { setErrors(e); return; } onComplete(data); };
 
   const fieldStyle = (hasError?: string): React.CSSProperties => ({
-    width: '100%', padding: '13px 14px', background: SURFACE,
-    border: `1px solid ${hasError ? ACCENT : BORDER}`, borderRadius: 0,
+    width: '100%', padding: '13px 14px', background: FIELD_BG,
+    border: `1px solid ${hasError ? ACCENT : FIELD_BD}`, borderRadius: 0,
     fontSize: '16px', color: TEXT, fontFamily: FONT_B, fontWeight: 300,
     outline: 'none', boxSizing: 'border-box' as const,
   });
@@ -332,7 +334,7 @@ function Intake({ onComplete, onBack, initialData }: { onComplete: (data: Intake
   const labelSt: React.CSSProperties = {
     display: 'block', fontSize: '13px', letterSpacing: '0.15em',
     textTransform: 'uppercase' as const, color: MUTED, marginBottom: '8px',
-    fontFamily: FONT_B, fontWeight: 400,
+    fontFamily: FONT_B, fontWeight: 600,
   };
 
   return (
@@ -345,10 +347,10 @@ function Intake({ onComplete, onBack, initialData }: { onComplete: (data: Intake
       </div>
       <div style={{ flex: 1, overflowY: 'auto' as const }}>
         <div className="animate-fade-up" style={{ maxWidth: '480px', margin: '0 auto', padding: '8px 24px 32px' }}>
-          <h2 style={{ fontFamily: FONT_H, fontStyle: 'italic', fontWeight: 400, fontSize: '28px', color: TEXT, marginBottom: '8px', lineHeight: 1.35 }}>
+          <h2 className="intake-heading" style={{ fontFamily: FONT_H, fontStyle: 'italic', fontWeight: 400, fontSize: '28px', color: TEXT, marginBottom: '8px', lineHeight: 1.35 }}>
             Before we begin
           </h2>
-          <p style={{ fontFamily: FONT_B, fontSize: '14px', color: MUTED, lineHeight: 1.65, marginBottom: '32px', fontWeight: 300 }}>
+          <p className="intake-subheading" style={{ fontFamily: FONT_B, fontSize: '14px', color: MUTED, lineHeight: 1.65, marginBottom: '32px', fontWeight: 300 }}>
             Your answers stay private. The last question is what makes your result specific to you.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '20px' }}>
@@ -368,8 +370,8 @@ function Intake({ onComplete, onBack, initialData }: { onComplete: (data: Intake
                 {['Man', 'Woman', 'Non-binary', 'Prefer not to say'].map(opt => (
                   <button key={opt} type="button" onClick={() => setData(d => ({ ...d, gender: opt }))} style={{
                     ...TAP_BASE, padding: '13px 14px', minHeight: '44px',
-                    background: data.gender === opt ? SEL_BG : SURFACE,
-                    border: `1px solid ${data.gender === opt ? ACCENT : BORDER}`,
+                    background: data.gender === opt ? SEL_BG : FIELD_BG,
+                    border: data.gender === opt ? `2px solid ${ACCENT}` : `1px solid ${FIELD_BD}`,
                     borderRadius: 0, fontSize: '16px', color: data.gender === opt ? TEXT : MUTED,
                     fontFamily: FONT_B, fontWeight: 300, textAlign: 'left' as const, outline: 'none',
                   }}>{opt}</button>
@@ -382,7 +384,7 @@ function Intake({ onComplete, onBack, initialData }: { onComplete: (data: Intake
             </div>
             <div>
               <label style={labelSt}>What is the one problem you most want to solve?</label>
-              <p style={{ fontFamily: FONT_B, fontSize: '12px', color: MUTED, opacity: 0.65, marginBottom: '10px', lineHeight: 1.55, fontWeight: 300 }}>
+              <p style={{ fontFamily: FONT_B, fontSize: '14px', color: MUTED, opacity: 0.65, marginBottom: '10px', lineHeight: 1.55, fontWeight: 300 }}>
                 Don't edit yourself. The more detail you give — specific situations, how long this has been running, what you've already tried — the more precisely your result will be written for you. This is the most important field.
               </p>
               <textarea
@@ -423,7 +425,7 @@ function SectionTransition({ sectionNumber, onContinue, onBack, current, total }
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' as const, justifyContent: 'center', paddingTop: '80px' }}>
         <div className="animate-fade-up" style={{ maxWidth: '680px', margin: '0 auto', padding: '0 24px', width: '100%' }}>
           <div style={{ width: '32px', height: '1px', background: ACCENT, marginBottom: '28px' }} />
-          <p style={{ fontFamily: FONT_H, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(28px, 4vw, 40px)', lineHeight: 1.2, color: TEXT, marginBottom: '20px' }}>
+          <p className="transition-heading" style={{ fontFamily: FONT_H, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(28px, 4vw, 40px)', lineHeight: 1.2, color: TEXT, marginBottom: '20px' }}>
             {t.heading}
           </p>
           <p style={{ fontFamily: FONT_B, fontWeight: 300, fontSize: '17px', lineHeight: 1.7, color: MUTED }}>
@@ -581,7 +583,7 @@ function Quiz({ initialIdx, initialAnswers, onComplete, onBack }: {
           {question.label && (
             <p style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase' as const, color: ACCENT, marginBottom: '14px', fontWeight: 400, fontFamily: FONT_B }}>{question.label}</p>
           )}
-          <h2 style={{ fontFamily: FONT_H, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(24px, 3vw, 32px)', lineHeight: 1.3, color: TEXT, marginBottom: '32px' }}>
+          <h2 className="quiz-question-text" style={{ fontFamily: FONT_H, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(24px, 3vw, 32px)', lineHeight: 1.3, color: TEXT, marginBottom: '32px' }}>
             {question.text}
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '2px' }}>
@@ -594,7 +596,7 @@ function Quiz({ initialIdx, initialAnswers, onComplete, onBack }: {
                   borderLeft: isSel ? `2px solid ${ACCENT}` : '1px solid transparent',
                   textAlign: 'left' as const, transition: 'all 0.15s ease', fontFamily: FONT_B, outline: 'none',
                 }}>
-                  <span style={{ fontSize: '17px', lineHeight: 1.55, color: isSel ? TEXT : MUTED, fontWeight: 300, transition: 'color 0.15s ease', display: 'block' }}>
+                  <span style={{ fontSize: '17px', lineHeight: 1.55, color: isSel ? TEXT : MUTED, fontWeight: 400, transition: 'color 0.15s ease', display: 'block' }}>
                     {option.text}
                   </span>
                 </button>
@@ -637,7 +639,7 @@ function Closing({ name, onSubmit, onBack }: { name: string; onSubmit: (closing:
             Is there anything else you want me to know? Something the questions didn't quite reach. This is optional, but anything you share goes directly into your result.
           </p>
           <textarea value={text} onChange={e => setText(e.target.value)} rows={5} style={{
-            width: '100%', padding: '14px', background: SURFACE, border: `1px solid ${BORDER}`,
+            width: '100%', padding: '14px', background: FIELD_BG, border: `1px solid ${FIELD_BD}`,
             borderRadius: 0, fontSize: '16px', color: TEXT, fontFamily: FONT_B, fontWeight: 300,
             outline: 'none', resize: 'none' as const, lineHeight: 1.6, boxSizing: 'border-box' as const,
           }} placeholder="Anything else you want to add..." />
@@ -673,7 +675,7 @@ function EmailGate({ onSubmit }: { onSubmit: (email: string) => void }) {
           Your email
         </label>
         <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" style={{
-          width: '100%', padding: '13px 14px', background: SURFACE, border: `1px solid ${BORDER}`,
+          width: '100%', padding: '13px 14px', background: FIELD_BG, border: `1px solid ${FIELD_BD}`,
           borderRadius: 0, fontSize: '16px', color: TEXT, fontFamily: FONT_B, fontWeight: 300,
           outline: 'none', boxSizing: 'border-box' as const, marginBottom: '16px',
         }} />

@@ -54,6 +54,13 @@ body {
   .intake-name-age { grid-template-columns: 1fr !important; }
 }
 
+@media (max-width: 600px) {
+  .intake-heading { font-size: 26px !important; }
+  .intake-subheading { font-size: 15px !important; }
+  .quiz-question-text { font-size: 22px !important; }
+  .transition-heading { font-size: 28px !important; }
+}
+
 .pac-container {
   background: var(--surface);
   border: 1px solid var(--border);
